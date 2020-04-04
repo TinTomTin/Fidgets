@@ -24,9 +24,9 @@ namespace FillMeUp
             p.Parse(args);
             Console.WriteLine(showHelp);
          }
-         catch (OptionException)
+         catch (OptionException e)
          {
-            Console.Write("Tankowanie nocom nie wyszlo: \n");
+            Console.Write(String.Format("Tankowanie nocom nie wyszlo: {0}\n", e.Message));
             ShowHelp(p);
             return;
          }
@@ -36,7 +36,8 @@ namespace FillMeUp
             ShowHelp(p);
             return;
          }
-
+         
+         Console.WriteLine("Still in program, about to start task...");
          Task f = Task.Run(() => franek.FillErUp(), franek.StopToken);
 
          Console.ReadLine();

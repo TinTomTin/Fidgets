@@ -43,8 +43,9 @@ namespace FillMeUp
 
         public void FillErUp()
         {
+            Console.WriteLine("Looking for music in {0}", SourceFolder);
             string[] files = Directory.GetFiles(SourceFolder, "*.mp3", SearchOption.AllDirectories);
-
+           
             while (!token.IsCancellationRequested && pCopiedSize < Size)
             {
                 int trackNumber = pGenerator.Next(files.Length - 1);
@@ -52,6 +53,7 @@ namespace FillMeUp
                 string fileName = Path.GetFileName(file);
                 if (!pCopiedFiles.Contains(fileName))
                 {
+                    
                     long fileSize = new FileInfo(file).Length;
                     if (pCopiedSize + fileSize < Size)
                     {
