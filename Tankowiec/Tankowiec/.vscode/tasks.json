@@ -17,7 +17,9 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Tankowiec.csproj"
+                "${workspaceFolder}/Tankowiec.csproj",
+                "--output",
+                "${workspaceFolder}/bin/publish"
             ],
             "problemMatcher": "$tsc"
         },

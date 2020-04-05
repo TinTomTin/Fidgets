@@ -16,6 +16,7 @@ namespace FillMeUp
             { "s|source=", "Source folder of the music", v => franek.SourceFolder = v},
             { "d|destination=", "Where the player is at", v => franek.DestinationFolder = v},
             { "c|capacity=", "Size in Gb to upload", (double v) => franek.Size = (long)(v * 1024 * 1024 * 1024)},
+            { "e|extention=", "File extention to fill with", v => franek.FileExt = v},
             { "h|help","Show help", v => showHelp = v != null}
          };
 
