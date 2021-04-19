@@ -19,7 +19,7 @@ namespace FillMeUp
 
         private int consoleY;
         private ConsoleColor originalColor;
-
+        public string FileExt { get; set; }
         public string SourceFolder { get; set; }
         public string DestinationFolder { get; set; }
         public long Size { get; set; }
@@ -44,7 +44,8 @@ namespace FillMeUp
         public void FillErUp()
         {
             Console.WriteLine("Looking for music in {0}", SourceFolder);
-            string[] files = Directory.GetFiles(SourceFolder, "*.mp3", SearchOption.AllDirectories);
+            string searchPattern = string.Format("*.{0}", FileExt);
+            string[] files = Directory.GetFiles(SourceFolder, searchPattern, SearchOption.AllDirectories);
            
             while (!token.IsCancellationRequested && pCopiedSize < Size)
             {
@@ -53,7 +54,7 @@ namespace FillMeUp
                 string fileName = Path.GetFileName(file);
                 if (!pCopiedFiles.Contains(fileName))
                 {
-                    
+
                     long fileSize = new FileInfo(file).Length;
                     if (pCopiedSize + fileSize < Size)
                     {
