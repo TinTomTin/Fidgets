@@ -13,14 +13,30 @@ class LegoArtPic:
         return self.pilsY * self.pillSize
 
     
+def generatePillArt(legoArtPic, inputPixelMap, outFileName):
+    image = Image.new("RGB", (legoArtPic.pixelLength(), legoArtPic.pixelHeight()), "#000012")
+    draw = ImageDraw.Draw(image)
+    for x in range(legoArtPic.pilsX):
+        for y in range(legoArtPic.pilsY):
+            px = x * legoArtPic.pillSize
+            py = y * legoArtPic.pillSize
+            sourceColor = inputPixelMap[x, y]
+            outlineColor = (sourceColor[0] + 5, sourceColor[1] + 5, sourceColor[2] + 5)
+            points = [(px, py), (px + legoArtPic.pillSize, py + legoArtPic.pillSize)]
+            draw.ellipse(points, fill=sourceColor, outline="#888888", width=3)
+    image.save(outFileName)
+
 
 exp = LegoArtPic(50, 48, 48)
-image = Image.new("RGB", (exp.pixelLength(), exp.pixelHeight()), "#000012")
-draw = ImageDraw.Draw(image)
-for x in range(exp.pilsX):
-    for y in range(exp.pilsY):
-        px = x * exp.pillSize
-        py = y * exp.pillSize
-        points = [(px, py), (px + exp.pillSize, py + exp.pillSize)]
-        draw.ellipse(points, fill="#002200", outline="#004400", width=3)
-image.save("20231128.gif")
+
+inputImage =  Image.open("Boerneef.jpg")
+inputImage.load()
+
+smallNeef = inputImage.resize([48, 48])
+pixelMap = smallNeef.load()
+#smallNeef.save("smallneef.jpg")
+print(pixelMap[1,1])
+generatePillArt(exp, pixelMap, "20231205.gif")
+
+
+
