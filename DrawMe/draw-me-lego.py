@@ -5,13 +5,22 @@ class LegoArtPic:
         self.pillSize = pillSize
         self.pilsX = pilsX
         self.pilsY = pilsY
+
+    def pixelLength(self):
+        return self.pilsX * self.pillSize
+    
+    def pixelHeight(self):
+        return self.pilsY * self.pillSize
+
     
 
-
-image = Image.new("RGB", (400, 400), "#000012")
+exp = LegoArtPic(50, 48, 48)
+image = Image.new("RGB", (exp.pixelLength(), exp.pixelHeight()), "#000012")
 draw = ImageDraw.Draw(image)
-for x in range(5):
-    px = x * 20
-    points = [(px, 20), (px + 20, 40)]
-    draw.ellipse(points, fill="#002200", outline="#004400", width=2)
-image.save("first.gif")
+for x in range(exp.pilsX):
+    for y in range(exp.pilsY):
+        px = x * exp.pillSize
+        py = y * exp.pillSize
+        points = [(px, py), (px + exp.pillSize, py + exp.pillSize)]
+        draw.ellipse(points, fill="#002200", outline="#004400", width=3)
+image.save("20231128.gif")
