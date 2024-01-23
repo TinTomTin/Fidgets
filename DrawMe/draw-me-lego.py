@@ -15,8 +15,10 @@ class LegoArtPic:
 def generateColorLegend(inputImage, outFileName):
     colorsUsed = inputImage.getcolors()
     palette = inputImage.getpalette()
-    yStep = 45
-    legendPillSize = 30
+    xStart = 30
+    yStart = 20
+    yStep = 40
+    legendPillSize = yStep
     legendImage = Image.new("RGB", (500, len(colorsUsed) * yStep), "#800000")
     legendDraw = ImageDraw.Draw(legendImage)
     legendDraw.font = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeMono.ttf", size=30)
@@ -24,8 +26,9 @@ def generateColorLegend(inputImage, outFileName):
         legendLabel = 'x {cnt}'.format(cnt = colNumber[0])
         paletteIndex = colNumber[1] * 3
         fillColor = (palette[paletteIndex], palette[paletteIndex + 1], palette[paletteIndex +2])
-        points = [(30, colNumber[1] * yStep), (60, (colNumber[1] * yStep) + 30)]
-        legendDraw.ellipse(points, fill=fillColor, width=3)
+        outlineColor = (fillColor[0] + 25, fillColor[1] + 25, fillColor[2] + 25)
+        points = [(xStart, colNumber[1] * yStep), (xStart + legendPillSize, (colNumber[1] * yStep) + legendPillSize)]
+        legendDraw.ellipse(points, fill=fillColor, outline=outlineColor, width=3)
         legendDraw.text((30, colNumber[1] * yStep), str(colNumber[1]), fill='white')
         legendDraw.text((70, colNumber[1] * yStep), legendLabel, fill='white')
     legendImage.save('{fn}-legend.gif'.format(fn=outFileName))
