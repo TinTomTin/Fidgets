@@ -12,25 +12,27 @@ class LegoArtPic:
     def pixelHeight(self):
         return self.pilsY * self.pillSize
 
-def generateColorLegend(inputImage, outFileName):
+def generateColorLegend(pillSize, inputImage, outFileName):
     colorsUsed = inputImage.getcolors()
     palette = inputImage.getpalette()
     xStart = 30
-    yStart = 20
-    yStep = 40
-    legendPillSize = yStep
-    legendImage = Image.new("RGB", (500, len(colorsUsed) * yStep), "#800000")
+    yPadding = 10
+    fontOffset = int(pillSize / 2)
+    legendImage = Image.new("RGB", (500, len(colorsUsed) * (pillSize + yPadding)), "#000000")
     legendDraw = ImageDraw.Draw(legendImage)
     legendDraw.font = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeMono.ttf", size=30)
     for colNumber in colorsUsed:
-        legendLabel = 'x {cnt}'.format(cnt = colNumber[0])
         paletteIndex = colNumber[1] * 3
         fillColor = (palette[paletteIndex], palette[paletteIndex + 1], palette[paletteIndex +2])
         outlineColor = (fillColor[0] + 25, fillColor[1] + 25, fillColor[2] + 25)
-        points = [(xStart, colNumber[1] * yStep), (xStart + legendPillSize, (colNumber[1] * yStep) + legendPillSize)]
+        x1 = xStart
+        y1 = colNumber[1] * pillSize + (colNumber[1] * yPadding)
+        x2 = xStart + pillSize
+        y2 = (colNumber[1] * pillSize ) + (colNumber[1] * yPadding) + pillSize
+        points = [(x1, y1), (x2, y2)]
         legendDraw.ellipse(points, fill=fillColor, outline=outlineColor, width=3)
-        legendDraw.text((30, colNumber[1] * yStep), str(colNumber[1]), fill='white')
-        legendDraw.text((70, colNumber[1] * yStep), legendLabel, fill='white')
+        legendDraw.text((x1 + fontOffset, y1 + fontOffset), str(colNumber[1]), fill='white', anchor='mm')
+        legendDraw.text((xStart + 70, y1 + fontOffset), 'x {cnt}'.format(cnt = colNumber[0]), fill='white', anchor='lm')
     legendImage.save('{fn}-legend.gif'.format(fn=outFileName))
     
 
@@ -54,18 +56,18 @@ def generatePillArt(legoArtPic, inputImage, outFileName):
             draw.ellipse(points, fill=fillColor, width=3, outline=outlineColor)
             draw.text((px + fontOffset, py + fontOffset), str(int(paletteIndex / 3)),fill=(200, 200, 200), anchor="mm")
     image.save(outFileName)
-    generateColorLegend(colorAdjustedImage, outFileName)
+    generateColorLegend(legoArtPic.pillSize, colorAdjustedImage, outFileName)
 
 
 exp = LegoArtPic(50, 48, 48)
 
-inputImage =  Image.open("Boerneef.jpg")
+inputImage =  Image.open("Kas2.jpg")
 #print('Colors in P mode image: {cols}'.format(cols=len(colorAdjust.getcolors())))
 #colorAdjust = inputImage.convert(mode="RGB", colors=16, dither=3)
 #rgbImage = colorAdjust.convert(mode="RGB", colors=16, palette=1).resize([48,48])
 #print('Colors in RGB mode image: {cols}'.format(cols=len(rgbImage.getcolors())))
 
-generatePillArt(exp, inputImage, "20240123.gif")
+generatePillArt(exp, inputImage, "Kas2.gif")
 
 
 #TODO: split into 9 (3 x 3) tiles
