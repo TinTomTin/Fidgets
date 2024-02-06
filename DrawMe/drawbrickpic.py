@@ -55,8 +55,9 @@ def generatePillArt(legoArtPic, inputImage, outFileName):
             points = [(px, py), (px + legoArtPic.pillSize, py + legoArtPic.pillSize)]
             draw.ellipse(points, fill=fillColor, width=3, outline=outlineColor)
             draw.text((px + fontOffset, py + fontOffset), str(int(paletteIndex / 3)),fill=(200, 200, 200), anchor="mm")
-    image.save(outFileName)
-    generateColorLegend(legoArtPic.pillSize, colorAdjustedImage, outFileName)
+    return image
+    #image.save(outFileName)
+    #generateColorLegend(legoArtPic.pillSize, colorAdjustedImage, outFileName)
 
 
 exp = LegoArtPic(50, 48, 48)
@@ -67,7 +68,8 @@ inputImage =  Image.open("Kas2.jpg")
 #rgbImage = colorAdjust.convert(mode="RGB", colors=16, palette=1).resize([48,48])
 #print('Colors in RGB mode image: {cols}'.format(cols=len(rgbImage.getcolors())))
 
-generatePillArt(exp, inputImage, "Kas2.gif")
+outputImage = generatePillArt(exp, inputImage, "Kas2.gif")
+outputImage.save("Kas2.gif")
 
 
 #TODO: split into 9 (3 x 3) tiles
