@@ -20,7 +20,7 @@ def generateColorLegend(pillSize, inputImage, outFileName):
     fontOffset = int(pillSize / 2)
     legendImage = Image.new("RGB", (500, len(colorsUsed) * (pillSize + yPadding)), "#000000")
     legendDraw = ImageDraw.Draw(legendImage)
-    legendDraw.font = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeMono.ttf", size=30)
+    legendDraw.font = ImageFont.truetype("FreeMono.ttf", size=30)
     for colNumber in colorsUsed:
         paletteIndex = colNumber[1] * 3
         fillColor = (palette[paletteIndex], palette[paletteIndex + 1], palette[paletteIndex +2])
@@ -44,7 +44,7 @@ def generatePillArt(legoArtPic, inputImage, outFileName):
 
     image = Image.new("RGB", (legoArtPic.pixelLength(), legoArtPic.pixelHeight()), "#000012")
     draw = ImageDraw.Draw(image)
-    draw.font = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeMono.ttf", size=30)
+    draw.font = ImageFont.truetype("FreeMono.ttf", size=30)
     for x in range(legoArtPic.pilsX):
         for y in range(legoArtPic.pilsY):
             px = x * legoArtPic.pillSize
