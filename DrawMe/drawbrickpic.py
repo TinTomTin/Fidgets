@@ -64,16 +64,16 @@ def generatePillArt(legoArtPic, inputImage):
 
 exp = LegoArtPic(50, 48, 48)
 
-inputImage =  Image.open("Kas2.jpg")
+#inputImage =  Image.open("Kas2.jpg")
 #print('Colors in P mode image: {cols}'.format(cols=len(colorAdjust.getcolors())))
 #colorAdjust = inputImage.convert(mode="RGB", colors=16, dither=3)
 #rgbImage = colorAdjust.convert(mode="RGB", colors=16, palette=1).resize([48,48])
 #print('Colors in RGB mode image: {cols}'.format(cols=len(rgbImage.getcolors())))
 
-outputImage = generatePillArt(exp, inputImage)
-outputImage.save("Kas2.gif")
-legendImage = generateColorLegend(exp.pillSize, inputImage)
-legendImage.save("Kas2-legend.gif")
+#outputImage = generatePillArt(exp, inputImage)
+#outputImage.save("Kas2.gif")
+#legendImage = generateColorLegend(exp.pillSize, inputImage)
+#legendImage.save("Kas2-legend.gif")
 
 
 #TODO: split into 9 (3 x 3) tiles
