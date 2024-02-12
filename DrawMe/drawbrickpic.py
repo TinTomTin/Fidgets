@@ -21,7 +21,7 @@ def generateColorLegend(pillSize, inputImage):
     fontOffset = int(pillSize / 2)
     legendImage = Image.new("RGB", (500, len(colorsUsed) * (pillSize + yPadding)), "#000000")
     legendDraw = ImageDraw.Draw(legendImage)
-    legendDraw.font = ImageFont.truetype("FreeMono.ttf", size=30)
+    #legendDraw.font = ImageFont.truetype("FreeMono.ttf", size=30)
     for colNumber in colorsUsed:
         paletteIndex = colNumber[1] * 3
         fillColor = (palette[paletteIndex], palette[paletteIndex + 1], palette[paletteIndex +2])
@@ -33,9 +33,8 @@ def generateColorLegend(pillSize, inputImage):
         points = [(x1, y1), (x2, y2)]
         legendDraw.ellipse(points, fill=fillColor, outline=outlineColor, width=3)
         legendDraw.text((x1 + fontOffset, y1 + fontOffset), str(colNumber[1]), fill='white', anchor='mm')
-        legendDraw.text((xStart + 70, y1 + fontOffset), 'x {cnt}'.format(cnt = colNumber[0]), fill='white', anchor='lm')
+        legendDraw.text((xStart + 70, y1 + fontOffset), 'x {cnt}'.format(cnt = colNumber[0]), fill='white', anchor='lm', font_size=25)
     return legendImage
-    #legendImage.save('{fn}-legend.gif'.format(fn=outFileName))
     
 
 def generatePillArt(legoArtPic, inputImage):
@@ -46,7 +45,7 @@ def generatePillArt(legoArtPic, inputImage):
 
     image = Image.new("RGB", (legoArtPic.pixelLength(), legoArtPic.pixelHeight()), "#000012")
     draw = ImageDraw.Draw(image)
-    draw.font = ImageFont.truetype("FreeMono.ttf", size=30)
+    #draw.font = ImageFont.truetype("FreeMono.ttf", size=30)
     for x in range(legoArtPic.pilsX):
         for y in range(legoArtPic.pilsY):
             px = x * legoArtPic.pillSize
@@ -56,13 +55,10 @@ def generatePillArt(legoArtPic, inputImage):
             outlineColor = (fillColor[0] + 25, fillColor[1] + 25, fillColor[2] + 25)
             points = [(px, py), (px + legoArtPic.pillSize, py + legoArtPic.pillSize)]
             draw.ellipse(points, fill=fillColor, width=3, outline=outlineColor)
-            draw.text((px + fontOffset, py + fontOffset), str(int(paletteIndex / 3)),fill=(200, 200, 200), anchor="mm")
+            draw.text((px + fontOffset, py + fontOffset), str(int(paletteIndex / 3)),fill=(200, 200, 200), anchor="mm", font_size=25)
     return image
-    #image.save(outFileName)
-    #generateColorLegend(legoArtPic.pillSize, colorAdjustedImage, outFileName)
 
-
-exp = LegoArtPic(50, 48, 48)
+#exp = LegoArtPic(50, 48, 48)
 
 #inputImage =  Image.open("Kas2.jpg")
 #print('Colors in P mode image: {cols}'.format(cols=len(colorAdjust.getcolors())))
@@ -81,4 +77,4 @@ exp = LegoArtPic(50, 48, 48)
 #TODO: source image as parameter
 #TODO: generate image with pill legend
 #TODO: share using streamlit
-
+#TODO: load custom font
