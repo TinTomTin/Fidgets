@@ -12,9 +12,10 @@ class LegoArtPic:
     def pixelHeight(self):
         return self.pilsY * self.pillSize
 
-def generateColorLegend(pillSize, inputImage, outFileName):
-    colorsUsed = inputImage.getcolors()
-    palette = inputImage.getpalette()
+def generateColorLegend(pillSize, inputImage):
+    colorAdjustedImage = inputImage.convert(mode="P", palette=1, colors=16, dither=3).resize([48, 48])
+    colorsUsed = colorAdjustedImage.getcolors()
+    palette = colorAdjustedImage.getpalette()
     xStart = 30
     yPadding = 10
     fontOffset = int(pillSize / 2)
@@ -33,10 +34,11 @@ def generateColorLegend(pillSize, inputImage, outFileName):
         legendDraw.ellipse(points, fill=fillColor, outline=outlineColor, width=3)
         legendDraw.text((x1 + fontOffset, y1 + fontOffset), str(colNumber[1]), fill='white', anchor='mm')
         legendDraw.text((xStart + 70, y1 + fontOffset), 'x {cnt}'.format(cnt = colNumber[0]), fill='white', anchor='lm')
-    legendImage.save('{fn}-legend.gif'.format(fn=outFileName))
+    return legendImage
+    #legendImage.save('{fn}-legend.gif'.format(fn=outFileName))
     
 
-def generatePillArt(legoArtPic, inputImage, outFileName):
+def generatePillArt(legoArtPic, inputImage):
     colorAdjustedImage = inputImage.convert(mode="P", palette=1, colors=16, dither=3).resize([48, 48])
     inputPixelMap = colorAdjustedImage.load()
     inputPalette = colorAdjustedImage.getpalette()
@@ -68,8 +70,10 @@ inputImage =  Image.open("Kas2.jpg")
 #rgbImage = colorAdjust.convert(mode="RGB", colors=16, palette=1).resize([48,48])
 #print('Colors in RGB mode image: {cols}'.format(cols=len(rgbImage.getcolors())))
 
-outputImage = generatePillArt(exp, inputImage, "Kas2.gif")
+outputImage = generatePillArt(exp, inputImage)
 outputImage.save("Kas2.gif")
+legendImage = generateColorLegend(exp.pillSize, inputImage)
+legendImage.save("Kas2-legend.gif")
 
 
 #TODO: split into 9 (3 x 3) tiles
