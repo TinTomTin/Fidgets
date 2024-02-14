@@ -32,13 +32,13 @@ def generateColorLegend(pillSize, inputImage):
         y2 = (colNumber[1] * pillSize ) + (colNumber[1] * yPadding) + pillSize
         points = [(x1, y1), (x2, y2)]
         legendDraw.ellipse(points, fill=fillColor, outline=outlineColor, width=3)
-        legendDraw.text((x1 + fontOffset, y1 + fontOffset), str(colNumber[1]), fill='white', anchor='mm')
+        legendDraw.text((x1 + fontOffset, y1 + fontOffset), str(colNumber[1]), fill='white', anchor='mm', font_size=25)
         legendDraw.text((xStart + 70, y1 + fontOffset), 'x {cnt}'.format(cnt = colNumber[0]), fill='white', anchor='lm', font_size=25)
     return legendImage
     
 
 def generatePillArt(legoArtPic, inputImage):
-    colorAdjustedImage = inputImage.convert(mode="P", palette=1, colors=16, dither=3).resize([48, 48])
+    colorAdjustedImage = inputImage.convert(mode="P", palette=1, colors=16, dither=3).resize([legoArtPic.pilsX, legoArtPic.pilsY])
     inputPixelMap = colorAdjustedImage.load()
     inputPalette = colorAdjustedImage.getpalette()
     fontOffset = int(legoArtPic.pillSize / 2)
@@ -75,6 +75,11 @@ def generatePillArt(legoArtPic, inputImage):
 #TODO: split into 9 (3 x 3) tiles
 #TODO: load custom palette
 #TODO: source image as parameter
-#TODO: generate image with pill legend
-#TODO: share using streamlit
+#DONE: generate image with pill legend
+#DONE: share using streamlit
 #TODO: load custom font
+#TODO: fix image format on download
+#TODO: size of generated art smaller. 
+#TODO: Theming
+#TODO: Top banner
+#TODO: zip file with all images for download
